@@ -1,0 +1,75 @@
+zad1
+Napišite bash skriptu koja ´ce iterirati po linijama datoteke /materijali/etc-passwd
+i koja ´ce ispisati korisnike koji pripadaju grupi 101. Korisniˇcka imena su u prvom,
+a grupe u ˇcetvrtom polju svake linije. Pokrenite skriptu i izlaz usmjerite u datoteku
+users101. (18/60)
+
+#!/bin/bash
+
+# Path to etc-passwd file
+file="$HOME/materijali/etc-passwd"
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+  echo "File $file does not exist."
+  exit 1
+fi
+
+awk -F: '$4 == 101 {print $1}' $file > users101
+
+=========================================================================================================
+
+zad2
+Napišite bash skriptu koja ´ce od korisnika tražiti da upiše broj zadataka u vježbi,
+nakon ˇcega ´ce u teku´cem direktoriju napraviti odgovaraju´ci broj poddirektorija naziva zadX, uz zapisivanje poruka u log datoteci dircreator.log. Skripta prilikom
+pokretanja treba bezuvjetno izbrisati sve stare direktorije ˇciji naziv poˇcinje sa zad.
+Poruke u logu imaju zadani format „trenutno vrijeme - poruka o brisanju”, odnosno
+trebaju biti oblikovane kao u primjeru:
+Mon May 16 11:25:03 CEST 2022 - Directory zadX created (18/60)
+
+#!/bin/bash
+
+# Remove old directories starting with "zad"
+rm -rf zad*
+
+# Prompt user for the number of exercises
+read -p "Enter the number of exercises in the assignment: " num_exercises
+
+# Check if input is a valid positive integer
+re='^[0-9]+$'
+if ! [[ $num_exercises =~ $re ]] ; then
+   echo "Invalid input. Please enter a positive integer."
+   exit 1
+fi
+
+# Create directories and log the actions
+log_file="dircreator.log"
+for ((i = 1; i <= num_exercises; i++)); do
+  directory="zad$i"
+  mkdir "$directory"
+  echo "$(date) - Directory $directory created ($i/$num_exercises)" >> "$log_file"
+done
+
+=====================================================================================================
+
+
+
+zad3
+U statiˇckoj biblioteci /materijali/libbriskula.a nalazi se funkcija prototipa void
+karta() koja generira i ispisuje jednu sluˇcajnu kartu iz igre briškula. Napišite program u C-u koji prima argument, odnosno broj koji odreduje koliko ´ce karata biti ¯
+ispisano. Napišite makefile za automatizaciju postupka prevodenja programa. Na ¯
+kraju „ruˇcno” generirajte 40 karata (mogu se ponavljati) i upišite ih u datoteku
+karte. (24/60)
+
+#!/bin/bash
+
+# Compile the C program
+gcc -o program main.c -L/materijali -lbriskula
+
+# Run the program and generate 40 cards
+./program 40 > karte
+Make sure that the libbriskula.a library and the main.c source file are in the appropriate locations. Save the script to a file (e.g., generate_cards.sh), make it executable (chmod +x generate_cards.sh), and then run it in the terminal using ./generate_cards.sh.
+
+The script compiles the C program using gcc and links it with the libbriskula.a library. It then executes the compiled program with the argument 40 to generate 40 random cards. The output of the program is redirected to the karte file, which will contain the generated cards.
+
+Please note that this solution assumes that the necessary files and dependencies are correctly set up, including the library file and the main.c program file.

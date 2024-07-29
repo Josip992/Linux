@@ -1,0 +1,11 @@
+#!/bin/bash
+du -a /var | sort -n -r | head -n 10
+
+#####
+# u /var trazi 10 najvecih fileova i sortira ih od najv do najmanje
+#du command : Estimate file space usage.
+#sort command : Sort lines of text files or given input data.
+#head command : Output the first part of files i.e. to display first 10 largest file.
+#find command : Search file.
+#https://www.cyberciti.biz/faq/how-do-i-find-the-largest-filesdirectories-on-a-linuxunixbsd-filesystem/
+#####

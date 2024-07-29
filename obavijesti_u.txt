@@ -1,0 +1,7 @@
+#!/bin/bash
+sudo apt install notify-send
+echo "Vjezbe OS!" | at 14:40
+
+#####
+#
+#####
